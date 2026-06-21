@@ -161,7 +161,14 @@
     return `${String(d.getFullYear()).slice(2)}.${d.getMonth() + 1}.${d.getDate()}`;
   }
   async function refreshCount() {
-    const { count } = await db.from('happy_savings').select('*', { count: 'exact', head: true });
+    const currentUser = await getCurrentUser();
+    if (!currentUser) {
+      document.getElementById('happyCount').textContent = '0개';
+      return;
+    }
+    const { count } = await db.from('happy_savings')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', currentUser.id);
     document.getElementById('happyCount').textContent = `${count || 0}개`;
   }
 
@@ -185,9 +192,12 @@
   document.getElementById('submitWriteBtn').addEventListener('click', async () => {
     const text = writeTextarea.value.trim();
     if (!text) { alert('오늘의 행복했던 순간을 적어주세요.'); return; }
-    const currentUser = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
-    const author = currentUser?.name || '익명';
-    const { data, error } = await db.from('happy_savings').insert({ content: text, author }).select().single();
+    const currentUser = await getCurrentUser();
+    const { data, error } = await db.from('happy_savings').insert({
+      content: text,
+      author: currentUser?.name || '익명',
+      user_id: currentUser?.id || null,
+    }).select().single();
     if (error) { alert('저장 중 오류가 발생했어요. 잠시 후 다시 시도해주세요.'); console.error(error); return; }
     addMyId(data.id);
     await refreshCount();
