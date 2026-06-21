@@ -16,78 +16,83 @@
   <!-- 요약 카드 -->
   <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
-      <p class="text-xs text-gray-400 mb-1">총 회원</p>
-      <p class="text-2xl font-extrabold">1,284</p>
-      <p class="text-xs text-green-500 mt-1">↑ 12% 전월 대비</p>
+      <p class="text-xs text-gray-400 mb-1">총 행복저금</p>
+      <p id="statHappy" class="text-2xl font-extrabold">-</p>
+      <p class="text-xs text-gray-400 mt-1">Supabase 실시간</p>
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
-      <p class="text-xs text-gray-400 mb-1">총 행복저금</p>
-      <p class="text-2xl font-extrabold">8,471</p>
-      <p class="text-xs text-green-500 mt-1">↑ 8% 전월 대비</p>
+      <p class="text-xs text-gray-400 mb-1">총 회원</p>
+      <p class="text-2xl font-extrabold text-gray-300">-</p>
+      <p class="text-xs text-gray-300 mt-1">준비 중</p>
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
       <p class="text-xs text-gray-400 mb-1">이달 결제액</p>
-      <p class="text-2xl font-extrabold">₩3,210,000</p>
-      <p class="text-xs text-green-500 mt-1">↑ 5% 전월 대비</p>
+      <p class="text-2xl font-extrabold text-gray-300">-</p>
+      <p class="text-xs text-gray-300 mt-1">준비 중</p>
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
       <p class="text-xs text-gray-400 mb-1">미처리 문의</p>
-      <p class="text-2xl font-extrabold">7</p>
-      <p class="text-xs text-red-500 mt-1">처리 필요</p>
+      <p class="text-2xl font-extrabold text-gray-300">-</p>
+      <p class="text-xs text-gray-300 mt-1">준비 중</p>
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-    <!-- 최근 가입 회원 -->
-    <div class="bg-white rounded-2xl p-6 border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <p class="text-sm font-bold">최근 가입 회원</p>
-        <a href="users.html" class="text-xs text-gray-400 hover:text-gray-700">전체보기 ›</a>
-      </div>
-      <table class="w-full text-sm">
-        <thead><tr class="text-xs text-gray-400 border-b border-gray-100">
-          <th class="text-left pb-2 font-semibold">이름</th>
-          <th class="text-left pb-2 font-semibold">이메일</th>
-          <th class="text-left pb-2 font-semibold">가입일</th>
-        </tr></thead>
-        <tbody class="divide-y divide-gray-50">
-          <tr><td class="py-2.5 font-medium">김수정</td><td class="py-2.5 text-gray-500">sujung@gmail.com</td><td class="py-2.5 text-gray-400 text-xs">2026.6.21</td></tr>
-          <tr><td class="py-2.5 font-medium">이민준</td><td class="py-2.5 text-gray-500">minjun@naver.com</td><td class="py-2.5 text-gray-400 text-xs">2026.6.20</td></tr>
-          <tr><td class="py-2.5 font-medium">박지연</td><td class="py-2.5 text-gray-500">jiyeon@kakao.com</td><td class="py-2.5 text-gray-400 text-xs">2026.6.19</td></tr>
-          <tr><td class="py-2.5 font-medium">최현우</td><td class="py-2.5 text-gray-500">hyunwoo@gmail.com</td><td class="py-2.5 text-gray-400 text-xs">2026.6.18</td></tr>
-        </tbody>
-      </table>
+  <!-- 최근 행복저금 -->
+  <div class="bg-white rounded-2xl p-6 border border-gray-100">
+    <div class="flex items-center justify-between mb-4">
+      <p class="text-sm font-bold">최근 행복저금</p>
+      <a href="happy-savings.html" class="text-xs text-gray-400 hover:text-gray-700">전체보기 ›</a>
     </div>
-
-    <!-- 최근 1:1 문의 -->
-    <div class="bg-white rounded-2xl p-6 border border-gray-100">
-      <div class="flex items-center justify-between mb-4">
-        <p class="text-sm font-bold">최근 1:1 문의</p>
-        <a href="support.html" class="text-xs text-gray-400 hover:text-gray-700">전체보기 ›</a>
-      </div>
-      <div class="space-y-3">
-        <div class="flex items-center justify-between py-1">
-          <div><p class="text-sm font-semibold">유언 작성이 저장되지 않아요</p><p class="text-xs text-gray-400">김수정 · 2026.6.21</p></div>
-          <span class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">미처리</span>
-        </div>
-        <div class="flex items-center justify-between py-1">
-          <div><p class="text-sm font-semibold">망고 포인트 충전 오류</p><p class="text-xs text-gray-400">이민준 · 2026.6.20</p></div>
-          <span class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full">미처리</span>
-        </div>
-        <div class="flex items-center justify-between py-1">
-          <div><p class="text-sm font-semibold">전문가 상담 예약 변경 가능한가요?</p><p class="text-xs text-gray-400">박지연 · 2026.6.19</p></div>
-          <span class="text-[11px] font-bold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full">처리 중</span>
-        </div>
-        <div class="flex items-center justify-between py-1">
-          <div><p class="text-sm font-semibold">회원 탈퇴 처리 방법 문의</p><p class="text-xs text-gray-400">최현우 · 2026.6.17</p></div>
-          <span class="text-[11px] font-bold text-green-500 bg-green-50 px-2 py-0.5 rounded-full">처리 완료</span>
-        </div>
-      </div>
-    </div>
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="text-xs text-gray-400 border-b border-gray-100">
+          <th class="text-left pb-2 font-semibold">작성자</th>
+          <th class="text-left pb-2 font-semibold">내용</th>
+          <th class="text-left pb-2 font-semibold">작성일</th>
+        </tr>
+      </thead>
+      <tbody id="recentBody" class="divide-y divide-gray-50">
+        <tr><td colspan="3" class="py-6 text-center text-sm text-gray-400">불러오는 중...</td></tr>
+      </tbody>
+    </table>
   </div>
+
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/supabase-config.js"></script>
 <script src="assets/js/admin-auth.js"></script>
 <script src="assets/js/admin-layout.js"></script>
+<script>
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+  }
+
+  async function loadDashboard() {
+    // 총 행복저금 수
+    const { count } = await db.from('happy_savings').select('*', { count: 'exact', head: true });
+    document.getElementById('statHappy').textContent = (count ?? 0).toLocaleString() + '건';
+
+    // 최근 5개 항목
+    const { data } = await db.from('happy_savings').select('*').order('created_at', { ascending: false }).limit(5);
+    const tbody = document.getElementById('recentBody');
+    if (!data?.length) {
+      tbody.innerHTML = '<tr><td colspan="3" class="py-6 text-center text-sm text-gray-400">아직 등록된 행복저금이 없어요.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map(e => `
+      <tr>
+        <td class="py-2.5 font-medium">${e.author || '익명'}</td>
+        <td class="py-2.5 text-gray-500 max-w-xs truncate">${e.content}</td>
+        <td class="py-2.5 text-gray-400 text-xs">${formatDate(e.created_at)}</td>
+      </tr>
+    `).join('');
+  }
+
+  loadDashboard();
+</script>
 </body>
 </html>
