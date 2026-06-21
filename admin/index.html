@@ -13,27 +13,12 @@
 
 <main class="ml-56 pt-14 min-h-screen p-8">
 
-  <!-- 요약 카드 -->
-  <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+  <!-- 요약 카드 (실제 연동 데이터만) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8 max-w-sm">
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
       <p class="text-xs text-gray-400 mb-1">총 행복저금</p>
       <p id="statHappy" class="text-2xl font-extrabold">-</p>
-      <p class="text-xs text-gray-400 mt-1">Supabase 실시간</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-      <p class="text-xs text-gray-400 mb-1">총 회원</p>
-      <p class="text-2xl font-extrabold text-gray-300">-</p>
-      <p class="text-xs text-gray-300 mt-1">준비 중</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-      <p class="text-xs text-gray-400 mb-1">이달 결제액</p>
-      <p class="text-2xl font-extrabold text-gray-300">-</p>
-      <p class="text-xs text-gray-300 mt-1">준비 중</p>
-    </div>
-    <div class="bg-white rounded-2xl p-5 border border-gray-100">
-      <p class="text-xs text-gray-400 mb-1">미처리 문의</p>
-      <p class="text-2xl font-extrabold text-gray-300">-</p>
-      <p class="text-xs text-gray-300 mt-1">준비 중</p>
+      <p class="text-xs text-gray-400 mt-1">실시간</p>
     </div>
   </div>
 
@@ -72,11 +57,9 @@
   }
 
   async function loadDashboard() {
-    // 총 행복저금 수
     const { count } = await db.from('happy_savings').select('*', { count: 'exact', head: true });
     document.getElementById('statHappy').textContent = (count ?? 0).toLocaleString() + '건';
 
-    // 최근 5개 항목
     const { data } = await db.from('happy_savings').select('*').order('created_at', { ascending: false }).limit(5);
     const tbody = document.getElementById('recentBody');
     if (!data?.length) {
