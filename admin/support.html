@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada 관리자 — 1:1 문의</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900" data-page="support">
+
+<div id="admin-sidebar"></div>
+<div id="admin-header"></div>
+
+<main class="ml-56 pt-14 min-h-screen p-8">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-extrabold">1:1 문의</h2>
+      <p class="text-xs text-gray-400 mt-0.5">미처리 <span class="font-bold text-red-500">7건</span></p>
+    </div>
+    <div class="flex gap-2">
+      <button class="text-sm font-bold px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-50">전체</button>
+      <button class="text-sm font-bold px-4 py-2 rounded-xl bg-red-50 text-red-500 border border-red-100">미처리</button>
+      <button class="text-sm font-bold px-4 py-2 rounded-xl border border-gray-200 hover:bg-gray-50">처리 완료</button>
+    </div>
+  </div>
+
+  <div class="space-y-3">
+    <div class="bg-white rounded-2xl border border-gray-100 p-5">
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-sm font-bold mb-1">유언 작성이 저장되지 않아요</p>
+          <p class="text-xs text-gray-400">김수정 · 2026.6.21 14:32</p>
+          <p class="text-sm text-gray-500 mt-2 leading-relaxed">유언을 작성하고 저장 버튼을 눌렀는데 계속 오류가 발생합니다. 몇 번 시도해도 저장이 안 되네요.</p>
+        </div>
+        <span class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full shrink-0 ml-4">미처리</span>
+      </div>
+      <div class="mt-4 pt-4 border-t border-gray-50">
+        <textarea rows="2" placeholder="답변을 입력하세요" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#FFC107] resize-none"></textarea>
+        <button onclick="alert('답변이 전송되었습니다. (데모)')" class="mt-2 text-xs font-bold bg-black text-white px-4 py-2 rounded-xl">답변 전송</button>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5">
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-sm font-bold mb-1">망고 포인트 충전 오류</p>
+          <p class="text-xs text-gray-400">이민준 · 2026.6.20 09:15</p>
+          <p class="text-sm text-gray-500 mt-2 leading-relaxed">포인트 충전을 시도했는데 결제는 됐는데 포인트가 안 쌓였습니다.</p>
+        </div>
+        <span class="text-[11px] font-bold text-red-500 bg-red-50 px-2 py-0.5 rounded-full shrink-0 ml-4">미처리</span>
+      </div>
+      <div class="mt-4 pt-4 border-t border-gray-50">
+        <textarea rows="2" placeholder="답변을 입력하세요" class="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#FFC107] resize-none"></textarea>
+        <button onclick="alert('답변이 전송되었습니다. (데모)')" class="mt-2 text-xs font-bold bg-black text-white px-4 py-2 rounded-xl">답변 전송</button>
+      </div>
+    </div>
+    <div class="bg-white rounded-2xl border border-gray-100 p-5 opacity-60">
+      <div class="flex items-start justify-between">
+        <div>
+          <p class="text-sm font-bold mb-1">회원 탈퇴 처리 방법 문의</p>
+          <p class="text-xs text-gray-400">최현우 · 2026.6.17 18:00</p>
+          <p class="text-sm text-gray-500 mt-2">회원 탈퇴는 어떻게 하나요?</p>
+          <div class="mt-3 bg-gray-50 rounded-xl p-3 text-xs text-gray-600">
+            <p class="font-semibold mb-1">답변 완료</p>
+            마이페이지 → 설정 → 회원 탈퇴에서 진행하실 수 있습니다. 탈퇴 시 모든 데이터는 삭제됩니다.
+          </div>
+        </div>
+        <span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full shrink-0 ml-4">처리 완료</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/admin-auth.js"></script>
+<script src="assets/js/admin-layout.js"></script>
+</body>
+</html>

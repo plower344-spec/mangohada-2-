@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada — 내 유언</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-white text-gray-900" data-page="will">
+
+<div id="site-header"></div>
+
+<main class="max-w-7xl mx-auto px-6">
+<section class="py-10">
+  <div class="flex items-center justify-between mb-6">
+    <p class="text-2xl font-extrabold">내 유언</p>
+    <button class="text-sm text-gray-400">유언 수신인 관리 ›</button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- 작성 카드 -->
+    <div class="lg:col-span-1">
+      <div class="rounded-2xl bg-gray-50 p-6">
+        <p class="text-base font-extrabold mb-3">유언 작성 시 주의사항</p>
+        <p class="text-xs text-gray-600 leading-relaxed mb-4">
+          현재는 자필 형식이 아닌 타이핑을 통한 유언 작성은 법적 효력을 가지지 않습니다. 편하게 작성하고 기록용으로만 사용해 주세요.<br><br>
+          <span class="font-semibold">*법적 효력은 변호사 공증을 받거나 동영상으로 유언을 남길 시 발생할 수 있습니다.</span>
+        </p>
+        <label class="flex items-center gap-2 text-xs font-semibold mb-4">
+          <input type="checkbox" checked class="accent-[#FFC107] w-4 h-4"> 네, 이해했습니다
+        </label>
+        <button class="w-full bg-black text-white text-sm font-bold py-3 rounded-xl">글쓰기</button>
+      </div>
+
+      <div class="flex gap-2 mt-6 text-sm text-gray-400 border-b border-gray-100">
+        <span class="text-gray-900 font-bold pb-3 border-b-2 border-gray-900">All</span>
+        <span class="pb-3 px-2">글</span><span class="pb-3 px-2">사진</span><span class="pb-3 px-2">영상</span>
+      </div>
+    </div>
+
+    <!-- 리스트 -->
+    <div class="lg:col-span-2 space-y-4">
+      <p class="text-xs text-gray-400 font-semibold">2025</p>
+      <div class="hover-card border border-gray-100 rounded-2xl p-5 cursor-pointer">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xs font-bold text-gray-400">1/12</span>
+          <span class="text-[11px] bg-[#FFF3CD] text-[#B8860B] font-bold px-2 py-0.5 rounded-full">수신인 엄마</span>
+        </div>
+        <p class="text-base font-bold mb-1">사랑하는 우리 엄마에게</p>
+        <p class="text-sm text-gray-400">항상 하고 싶은 말이 많았는데..다음에 해야지 다음에는...</p>
+      </div>
+      <div class="hover-card border border-gray-100 rounded-2xl p-5 cursor-pointer">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xs font-bold text-gray-400">1/08</span>
+          <span class="text-[11px] bg-[#FFF3CD] text-[#B8860B] font-bold px-2 py-0.5 rounded-full">수신인 승연</span>
+        </div>
+        <p class="text-sm text-gray-400">우리 제주도 여행 갔을 때가 갑자기 생각나서 쓰는 글이...</p>
+      </div>
+      <p class="text-xs text-gray-400 font-semibold pt-2">2024</p>
+      <div class="hover-card border border-gray-100 rounded-2xl p-5 cursor-pointer">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xs font-bold text-gray-400">12/20</span>
+          <span class="text-[11px] bg-[#FFF3CD] text-[#B8860B] font-bold px-2 py-0.5 rounded-full">수신인 엄마, 아빠, 누나</span>
+        </div>
+        <p class="text-sm text-gray-400">지난 엄마 생일파티 때 우리 다같이 찍은 동영상 보면서...</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/layout.js"></script>
+</body>
+</html>

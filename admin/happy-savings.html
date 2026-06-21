@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada 관리자 — 행복저금 관리</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900" data-page="happy-savings">
+
+<div id="admin-sidebar"></div>
+<div id="admin-header"></div>
+
+<main class="ml-56 pt-14 min-h-screen p-8">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-extrabold">행복저금 관리</h2>
+      <p class="text-xs text-gray-400 mt-0.5">총 <span id="totalCount">-</span>건</p>
+    </div>
+    <div class="flex gap-2">
+      <select id="statusFilter" class="border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-[#FFC107]">
+        <option value="">전체 상태</option>
+        <option value="public">공개</option>
+        <option value="hidden">비공개</option>
+        <option value="reported">신고됨</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-50 border-b border-gray-100">
+        <tr class="text-xs text-gray-400 font-semibold">
+          <th class="text-left px-5 py-3">작성자</th>
+          <th class="text-left px-5 py-3">내용</th>
+          <th class="text-left px-5 py-3">작성일</th>
+          <th class="text-left px-5 py-3">상태</th>
+          <th class="px-5 py-3"></th>
+        </tr>
+      </thead>
+      <tbody id="entriesBody" class="divide-y divide-gray-50">
+        <tr><td colspan="5" class="px-5 py-8 text-center text-sm text-gray-400">불러오는 중...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/supabase-config.js"></script>
+<script src="assets/js/admin-auth.js"></script>
+<script src="assets/js/admin-layout.js"></script>
+<script>
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+  }
+
+  function statusBadge(status) {
+    if (status === 'reported') return '<span class="text-[11px] font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full">신고됨</span>';
+    if (status === 'hidden')   return '<span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">비공개</span>';
+    return '<span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">공개</span>';
+  }
+
+  async function loadEntries() {
+    const filter = document.getElementById('statusFilter').value;
+    let query = db.from('happy_savings').select('*', { count: 'exact' }).order('created_at', { ascending: false });
+    if (filter) query = query.eq('status', filter);
+
+    const { data, count, error } = await query;
+    document.getElementById('totalCount').textContent = count ?? 0;
+
+    const tbody = document.getElementById('entriesBody');
+    if (error || !data?.length) {
+      tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-8 text-center text-sm text-gray-400">${error ? '데이터를 불러오지 못했어요.' : '등록된 행복저금이 없어요.'}</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data.map(e => `
+      <tr>
+        <td class="px-5 py-3 font-medium">${e.author || '익명'}</td>
+        <td class="px-5 py-3 text-gray-500 max-w-xs truncate">${e.content}</td>
+        <td class="px-5 py-3 text-gray-400">${formatDate(e.created_at)}</td>
+        <td class="px-5 py-3">${statusBadge(e.status)}</td>
+        <td class="px-5 py-3">
+          <button onclick="deleteEntry('${e.id}')" class="text-xs text-red-400 hover:text-red-600">삭제</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  async function deleteEntry(id) {
+    if (!confirm('이 항목을 삭제할까요?')) return;
+    const { error } = await db.from('happy_savings').delete().eq('id', id);
+    if (error) { alert('삭제 중 오류가 발생했어요.'); return; }
+    loadEntries();
+  }
+
+  document.getElementById('statusFilter').addEventListener('change', loadEntries);
+
+  loadEntries();
+</script>
+</body>
+</html>

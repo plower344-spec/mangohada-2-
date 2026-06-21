@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada — 마이</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="bg-white text-gray-900" data-page="mypage">
+
+<div id="site-header"></div>
+
+<main class="max-w-7xl mx-auto px-6">
+<section class="py-10">
+  <p class="text-2xl font-extrabold mb-6">마이</p>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <!-- 프로필 / 설정 -->
+    <div class="space-y-4">
+      <div class="bg-gray-50 rounded-2xl p-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gray-200"></div>
+          <div><p class="text-sm font-bold">수정님</p><p class="text-xs text-gray-400">mango@gmail.com</p></div>
+        </div>
+        <button class="text-xs text-gray-400">프로필 수정 ›</button>
+      </div>
+
+      <div class="bg-[#FFFBEB] rounded-2xl p-5 flex justify-between items-center">
+        <span class="text-sm font-semibold">보유 포인트</span>
+        <span class="text-base font-extrabold text-[#B8860B]">🥭 100</span>
+      </div>
+
+      <div class="divide-y divide-gray-100 border-y border-gray-100">
+        <div class="flex justify-between items-center py-3 text-sm"><span class="font-semibold">안부인사 받기 설정</span><span class="text-[#FFC107] font-bold text-xs">받는 중 ›</span></div>
+        <div class="flex justify-between items-center py-3 text-sm"><span class="font-semibold">자주 묻는 질문</span><span class="text-gray-300">›</span></div>
+        <div class="flex justify-between items-center py-3 text-sm"><span class="font-semibold">1:1 문의</span><span class="text-gray-300">›</span></div>
+        <div class="flex justify-between items-center py-3 text-sm"><span class="font-semibold">공지사항</span><span class="text-gray-300">›</span></div>
+        <div class="flex justify-between items-center py-3 text-sm"><span class="font-semibold">앱 잠금 설정</span><span class="text-gray-300">›</span></div>
+      </div>
+    </div>
+
+    <!-- 망고 충전 -->
+    <div class="lg:col-span-2">
+      <p class="text-sm font-bold mb-3">망고 충전</p>
+      <div class="grid grid-cols-2 gap-3 mb-8">
+        <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3">
+          <span class="text-sm font-semibold">🥭 100개</span>
+          <span class="bg-[#FFC107] text-xs font-bold px-3 py-1.5 rounded-full">2,200원</span>
+        </div>
+        <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3">
+          <span class="text-sm font-semibold">🥭 200개 <span class="text-[#B8860B] text-xs">+50망고</span></span>
+          <span class="bg-[#FFC107] text-xs font-bold px-3 py-1.5 rounded-full">4,400원</span>
+        </div>
+        <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3">
+          <span class="text-sm font-semibold">🥭 500개 <span class="text-[#B8860B] text-xs">+150망고</span></span>
+          <span class="bg-[#FFC107] text-xs font-bold px-3 py-1.5 rounded-full">6,800원</span>
+        </div>
+        <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3">
+          <span class="text-sm font-semibold">🥭 1,000개 <span class="text-[#B8860B] text-xs">+200망고</span></span>
+          <span class="bg-[#FFC107] text-xs font-bold px-3 py-1.5 rounded-full">11,000원</span>
+        </div>
+      </div>
+
+      <p class="text-sm font-bold mb-3">아티클 구독</p>
+      <div class="grid grid-cols-2 gap-3 mb-8">
+        <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3">
+          <span class="text-sm font-semibold">월간 구독 <span class="text-[#B8860B] text-xs">+100망고</span></span>
+          <span class="bg-[#FFC107] text-xs font-bold px-3 py-1.5 rounded-full">월 3,300원</span>
+        </div>
+        <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3">
+          <span class="text-sm font-semibold">연간 구독 <span class="text-[#B8860B] text-xs">+500망고</span></span>
+          <span class="bg-[#FFC107] text-xs font-bold px-3 py-1.5 rounded-full">연 24,800원</span>
+        </div>
+      </div>
+
+      <p class="text-sm font-bold mb-3">무료 충전</p>
+      <div class="flex justify-between items-center border border-gray-100 rounded-xl px-4 py-3 max-w-md">
+        <span class="text-sm font-semibold">광고 시청하고 망고 2개 받기</span>
+        <span class="bg-gray-100 text-xs font-bold px-3 py-1.5 rounded-full">광고보기 0/2</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<div id="site-footer"></div>
+
+<script src="assets/js/layout.js"></script>
+</body>
+</html>

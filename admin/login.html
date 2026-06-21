@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada 관리자 — 로그인</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900">
+
+<main class="min-h-screen flex items-center justify-center px-6">
+  <div class="w-full max-w-sm">
+    <div class="text-center mb-8">
+      <a href="../index.html" class="text-2xl font-extrabold tracking-tight">mango<span class="text-[#FFC107]">hada</span></a>
+      <p class="text-xs font-bold text-gray-400 mt-1 tracking-widest">ADMIN CONSOLE</p>
+    </div>
+
+    <div class="bg-white border border-gray-100 rounded-2xl p-7 shadow-sm">
+      <h1 class="text-lg font-extrabold mb-6">관리자 로그인</h1>
+      <form id="adminLoginForm" class="space-y-3">
+        <input type="email" id="adminEmail" required placeholder="관리자 이메일" autocomplete="email"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FFC107]">
+        <input type="password" id="adminPassword" required placeholder="비밀번호" autocomplete="current-password"
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FFC107]">
+        <button type="submit" class="w-full bg-black text-white text-sm font-bold py-3 rounded-xl">로그인</button>
+      </form>
+      <p class="text-[11px] text-gray-400 text-center mt-5 bg-gray-50 rounded-xl p-3">
+        데모 계정<br>
+        <span class="font-semibold text-gray-500">admin@mangohada.com</span> / <span class="font-semibold text-gray-500">admin1234</span>
+      </p>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/admin-auth.js"></script>
+<script>
+  if (getAdminUser()) {
+    window.location.href = 'index.html';
+  }
+  document.getElementById('adminLoginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    adminLogin(
+      document.getElementById('adminEmail').value.trim(),
+      document.getElementById('adminPassword').value
+    );
+  });
+</script>
+</body>
+</html>

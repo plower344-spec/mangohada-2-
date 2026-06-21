@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada 관리자 — 아티클 관리</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900" data-page="articles">
+
+<div id="admin-sidebar"></div>
+<div id="admin-header"></div>
+
+<main class="ml-56 pt-14 min-h-screen p-8">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-extrabold">아티클 관리</h2>
+      <p class="text-xs text-gray-400 mt-0.5">총 48건</p>
+    </div>
+    <button class="bg-black text-white text-sm font-bold px-4 py-2 rounded-xl">+ 새 아티클</button>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-50 border-b border-gray-100">
+        <tr class="text-xs text-gray-400 font-semibold">
+          <th class="text-left px-5 py-3">제목</th>
+          <th class="text-left px-5 py-3">에디터</th>
+          <th class="text-left px-5 py-3">카테고리</th>
+          <th class="text-left px-5 py-3">게시일</th>
+          <th class="text-left px-5 py-3">상태</th>
+          <th class="px-5 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        <tr>
+          <td class="px-5 py-3 font-medium">생각을 비우고 싶을 때 갈 만한 여행지 7곳</td>
+          <td class="px-5 py-3 text-gray-500">김영희</td>
+          <td class="px-5 py-3"><span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2 py-0.5 rounded-full">마무리</span></td>
+          <td class="px-5 py-3 text-gray-400">2026.6.15</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span></td>
+          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">건강한 라이프스타일을 위한 운동 루틴</td>
+          <td class="px-5 py-3 text-gray-500">김민수</td>
+          <td class="px-5 py-3"><span class="bg-yellow-50 text-yellow-600 text-[11px] font-bold px-2 py-0.5 rounded-full">유언</span></td>
+          <td class="px-5 py-3 text-gray-400">2026.6.10</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span></td>
+          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">스트레스 관리 방법 — 명상부터 취미까지</td>
+          <td class="px-5 py-3 text-gray-500">이수진</td>
+          <td class="px-5 py-3"><span class="bg-green-50 text-green-600 text-[11px] font-bold px-2 py-0.5 rounded-full">장례</span></td>
+          <td class="px-5 py-3 text-gray-400">2026.6.05</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span></td>
+          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">유언장 작성 전 꼭 알아야 할 5가지</td>
+          <td class="px-5 py-3 text-gray-500">박현준</td>
+          <td class="px-5 py-3"><span class="bg-yellow-50 text-yellow-600 text-[11px] font-bold px-2 py-0.5 rounded-full">유언</span></td>
+          <td class="px-5 py-3 text-gray-400">—</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">임시저장</span></td>
+          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script src="assets/js/admin-auth.js"></script>
+<script src="assets/js/admin-layout.js"></script>
+</body>
+</html>

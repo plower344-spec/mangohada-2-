@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada 관리자 — 결제 관리</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900" data-page="payments">
+
+<div id="admin-sidebar"></div>
+<div id="admin-header"></div>
+
+<main class="ml-56 pt-14 min-h-screen p-8">
+  <div class="grid grid-cols-3 gap-5 mb-8">
+    <div class="bg-white rounded-2xl p-5 border border-gray-100">
+      <p class="text-xs text-gray-400 mb-1">이달 총 결제액</p>
+      <p class="text-2xl font-extrabold">₩3,210,000</p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 border border-gray-100">
+      <p class="text-xs text-gray-400 mb-1">이달 결제 건수</p>
+      <p class="text-2xl font-extrabold">412건</p>
+    </div>
+    <div class="bg-white rounded-2xl p-5 border border-gray-100">
+      <p class="text-xs text-gray-400 mb-1">환불 건수</p>
+      <p class="text-2xl font-extrabold">3건</p>
+    </div>
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <table class="w-full text-sm">
+      <thead class="bg-gray-50 border-b border-gray-100">
+        <tr class="text-xs text-gray-400 font-semibold">
+          <th class="text-left px-5 py-3">회원</th>
+          <th class="text-left px-5 py-3">상품</th>
+          <th class="text-left px-5 py-3">금액</th>
+          <th class="text-left px-5 py-3">결제 방식</th>
+          <th class="text-left px-5 py-3">결제일</th>
+          <th class="text-left px-5 py-3">상태</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        <tr>
+          <td class="px-5 py-3 font-medium">김수정</td>
+          <td class="px-5 py-3 text-gray-500">🥭 100개</td>
+          <td class="px-5 py-3 font-semibold">₩2,200</td>
+          <td class="px-5 py-3 text-gray-400">카카오페이</td>
+          <td class="px-5 py-3 text-gray-400">2026.6.21</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">이민준</td>
+          <td class="px-5 py-3 text-gray-500">연간 구독</td>
+          <td class="px-5 py-3 font-semibold">₩24,800</td>
+          <td class="px-5 py-3 text-gray-400">신용카드</td>
+          <td class="px-5 py-3 text-gray-400">2026.6.20</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">박지연</td>
+          <td class="px-5 py-3 text-gray-500">🥭 500개</td>
+          <td class="px-5 py-3 font-semibold">₩6,800</td>
+          <td class="px-5 py-3 text-gray-400">네이버페이</td>
+          <td class="px-5 py-3 text-gray-400">2026.6.19</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full">환불 요청</span></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">정승연</td>
+          <td class="px-5 py-3 text-gray-500">월간 구독</td>
+          <td class="px-5 py-3 font-semibold">₩3,300</td>
+          <td class="px-5 py-3 text-gray-400">카카오페이</td>
+          <td class="px-5 py-3 text-gray-400">2026.6.18</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
+        </tr>
+        <tr>
+          <td class="px-5 py-3 font-medium">최현우</td>
+          <td class="px-5 py-3 text-gray-500">🥭 1,000개</td>
+          <td class="px-5 py-3 font-semibold">₩11,000</td>
+          <td class="px-5 py-3 text-gray-400">신용카드</td>
+          <td class="px-5 py-3 text-gray-400">2026.6.17</td>
+          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script src="assets/js/admin-auth.js"></script>
+<script src="assets/js/admin-layout.js"></script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/woff2/Pretendard-Regular.woff2') format('woff2');
+  font-weight: 400;
+}
+
+* {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #ffffff;
+  color: #111111;
+}
+
+/* 상단 GNB 활성 링크 */
+.nav-link {
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s ease;
+}
+
+.nav-link .dot {
+  display: none;
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #FFC107;
+}
+
+.nav-link.active-link {
+  color: #111111;
+  font-weight: 800;
+}
+
+.nav-link.active-link .dot {
+  display: inline-block;
+}
+
+/* 카드 hover 효과 */
+.hover-card {
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.hover-card:hover {
+  border-color: #FFC107;
+}
+
+/* 스크롤바 숨김 (가로 스크롤 카드용) */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mangohada 관리자 — 회원 관리</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-900" data-page="users">
+
+<div id="admin-sidebar"></div>
+<div id="admin-header"></div>
+
+<main class="ml-56 pt-14 min-h-screen p-8">
+  <div class="flex items-center justify-between mb-6">
+    <div>
+      <h2 class="text-lg font-extrabold">회원 관리</h2>
+      <p class="text-xs text-gray-400 mt-0.5">총 1,284명</p>
+    </div>
+    <input type="text" id="userSearch" placeholder="이름 또는 이메일 검색" class="border border-gray-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-[#FFC107] w-64">
+  </div>
+
+  <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+    <table class="w-full text-sm" id="usersTable">
+      <thead class="bg-gray-50 border-b border-gray-100">
+        <tr class="text-xs text-gray-400 font-semibold">
+          <th class="text-left px-5 py-3">이름</th>
+          <th class="text-left px-5 py-3">이메일</th>
+          <th class="text-left px-5 py-3">가입 방식</th>
+          <th class="text-left px-5 py-3">행복저금</th>
+          <th class="text-left px-5 py-3">가입일</th>
+          <th class="text-left px-5 py-3">상태</th>
+          <th class="px-5 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-50">
+        <tr><td class="px-5 py-3 font-medium">김수정</td><td class="px-5 py-3 text-gray-500">sujung@gmail.com</td><td class="px-5 py-3"><span class="bg-gray-100 text-xs px-2 py-0.5 rounded-full">이메일</span></td><td class="px-5 py-3">23개</td><td class="px-5 py-3 text-gray-400">2026.6.21</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+        <tr><td class="px-5 py-3 font-medium">이민준</td><td class="px-5 py-3 text-gray-500">minjun@naver.com</td><td class="px-5 py-3"><span class="bg-yellow-100 text-xs px-2 py-0.5 rounded-full">카카오</span></td><td class="px-5 py-3">11개</td><td class="px-5 py-3 text-gray-400">2026.6.20</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+        <tr><td class="px-5 py-3 font-medium">박지연</td><td class="px-5 py-3 text-gray-500">jiyeon@kakao.com</td><td class="px-5 py-3"><span class="bg-blue-100 text-xs px-2 py-0.5 rounded-full">구글</span></td><td class="px-5 py-3">5개</td><td class="px-5 py-3 text-gray-400">2026.6.19</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+        <tr><td class="px-5 py-3 font-medium">최현우</td><td class="px-5 py-3 text-gray-500">hyunwoo@gmail.com</td><td class="px-5 py-3"><span class="bg-gray-100 text-xs px-2 py-0.5 rounded-full">이메일</span></td><td class="px-5 py-3">42개</td><td class="px-5 py-3 text-gray-400">2026.6.18</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+        <tr><td class="px-5 py-3 font-medium">정승연</td><td class="px-5 py-3 text-gray-500">seungyeon@naver.com</td><td class="px-5 py-3"><span class="bg-yellow-100 text-xs px-2 py-0.5 rounded-full">카카오</span></td><td class="px-5 py-3">8개</td><td class="px-5 py-3 text-gray-400">2026.6.15</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+        <tr><td class="px-5 py-3 font-medium">홍길동</td><td class="px-5 py-3 text-gray-500">gildong@gmail.com</td><td class="px-5 py-3"><span class="bg-blue-100 text-xs px-2 py-0.5 rounded-full">구글</span></td><td class="px-5 py-3">0개</td><td class="px-5 py-3 text-gray-400">2026.6.10</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">비활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+        <tr><td class="px-5 py-3 font-medium">윤미래</td><td class="px-5 py-3 text-gray-500">mirae@kakao.com</td><td class="px-5 py-3"><span class="bg-yellow-100 text-xs px-2 py-0.5 rounded-full">카카오</span></td><td class="px-5 py-3">17개</td><td class="px-5 py-3 text-gray-400">2026.6.05</td><td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td><td class="px-5 py-3"><button class="text-xs text-gray-400 hover:text-gray-700">상세</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<script src="assets/js/admin-auth.js"></script>
+<script src="assets/js/admin-layout.js"></script>
+<script>
+  document.getElementById('userSearch').addEventListener('input', function () {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#usersTable tbody tr').forEach(row => {
+      const text = row.textContent.toLowerCase();
+      row.style.display = text.includes(q) ? '' : 'none';
+    });
+  });
+</script>
+</body>
+</html>
