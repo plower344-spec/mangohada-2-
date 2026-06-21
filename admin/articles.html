@@ -15,9 +15,8 @@
   <div class="flex items-center justify-between mb-6">
     <div>
       <h2 class="text-lg font-extrabold">아티클 관리</h2>
-      <p class="text-xs text-gray-400 mt-0.5">총 48건</p>
+      <p class="text-xs text-gray-400 mt-0.5">총 <span id="totalCount">-</span>건</p>
     </div>
-    <button class="bg-black text-white text-sm font-bold px-4 py-2 rounded-xl">+ 새 아티클</button>
   </div>
 
   <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
@@ -32,45 +31,83 @@
           <th class="px-5 py-3"></th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-50">
-        <tr>
-          <td class="px-5 py-3 font-medium">생각을 비우고 싶을 때 갈 만한 여행지 7곳</td>
-          <td class="px-5 py-3 text-gray-500">김영희</td>
-          <td class="px-5 py-3"><span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2 py-0.5 rounded-full">마무리</span></td>
-          <td class="px-5 py-3 text-gray-400">2026.6.15</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">건강한 라이프스타일을 위한 운동 루틴</td>
-          <td class="px-5 py-3 text-gray-500">김민수</td>
-          <td class="px-5 py-3"><span class="bg-yellow-50 text-yellow-600 text-[11px] font-bold px-2 py-0.5 rounded-full">유언</span></td>
-          <td class="px-5 py-3 text-gray-400">2026.6.10</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">스트레스 관리 방법 — 명상부터 취미까지</td>
-          <td class="px-5 py-3 text-gray-500">이수진</td>
-          <td class="px-5 py-3"><span class="bg-green-50 text-green-600 text-[11px] font-bold px-2 py-0.5 rounded-full">장례</span></td>
-          <td class="px-5 py-3 text-gray-400">2026.6.05</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">유언장 작성 전 꼭 알아야 할 5가지</td>
-          <td class="px-5 py-3 text-gray-500">박현준</td>
-          <td class="px-5 py-3"><span class="bg-yellow-50 text-yellow-600 text-[11px] font-bold px-2 py-0.5 rounded-full">유언</span></td>
-          <td class="px-5 py-3 text-gray-400">—</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">임시저장</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
+      <tbody id="articlesBody" class="divide-y divide-gray-50">
+        <tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">불러오는 중...</td></tr>
       </tbody>
     </table>
   </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/supabase-config.js"></script>
 <script src="assets/js/admin-auth.js"></script>
 <script src="assets/js/admin-layout.js"></script>
+<script>
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function formatDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+  }
+
+  function statusBadge(status) {
+    if (status === 'draft') return '<span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">임시저장</span>';
+    return '<span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">게시 중</span>';
+  }
+
+  const CATEGORY_COLORS = {
+    '유언': 'bg-yellow-50 text-yellow-600',
+    '장례': 'bg-green-50 text-green-600',
+    '마무리': 'bg-blue-50 text-blue-600',
+  };
+
+  async function loadArticles() {
+    const { data, count, error } = await db
+      .from('articles')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false });
+
+    const tbody = document.getElementById('articlesBody');
+
+    if (error) {
+      tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">데이터를 불러오지 못했어요.</td></tr>`;
+      return;
+    }
+
+    document.getElementById('totalCount').textContent = (count ?? 0).toLocaleString();
+
+    if (!data?.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">등록된 아티클이 없어요.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data.map(a => `
+      <tr>
+        <td class="px-5 py-3 font-medium">${a.title || '-'}</td>
+        <td class="px-5 py-3 text-gray-500">${a.editor || '-'}</td>
+        <td class="px-5 py-3">
+          <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${CATEGORY_COLORS[a.category] || 'bg-gray-100 text-gray-600'}">
+            ${a.category || '-'}
+          </span>
+        </td>
+        <td class="px-5 py-3 text-gray-400">${formatDate(a.published_at)}</td>
+        <td class="px-5 py-3">${statusBadge(a.status)}</td>
+        <td class="px-5 py-3">
+          <button onclick="deleteArticle('${a.id}')" class="text-xs text-red-400 hover:text-red-600">삭제</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  async function deleteArticle(id) {
+    if (!confirm('이 아티클을 삭제할까요?')) return;
+    const { error } = await db.from('articles').delete().eq('id', id);
+    if (error) { alert('삭제 중 오류가 발생했어요.'); return; }
+    loadArticles();
+  }
+
+  loadArticles();
+</script>
 </body>
 </html>

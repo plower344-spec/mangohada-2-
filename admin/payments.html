@@ -15,15 +15,15 @@
   <div class="grid grid-cols-3 gap-5 mb-8">
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
       <p class="text-xs text-gray-400 mb-1">이달 총 결제액</p>
-      <p class="text-2xl font-extrabold">₩3,210,000</p>
+      <p class="text-2xl font-extrabold" id="statTotal">-</p>
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
       <p class="text-xs text-gray-400 mb-1">이달 결제 건수</p>
-      <p class="text-2xl font-extrabold">412건</p>
+      <p class="text-2xl font-extrabold" id="statCount">-</p>
     </div>
     <div class="bg-white rounded-2xl p-5 border border-gray-100">
       <p class="text-xs text-gray-400 mb-1">환불 건수</p>
-      <p class="text-2xl font-extrabold">3건</p>
+      <p class="text-2xl font-extrabold" id="statRefund">-</p>
     </div>
   </div>
 
@@ -39,53 +39,77 @@
           <th class="text-left px-5 py-3">상태</th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-50">
-        <tr>
-          <td class="px-5 py-3 font-medium">김수정</td>
-          <td class="px-5 py-3 text-gray-500">🥭 100개</td>
-          <td class="px-5 py-3 font-semibold">₩2,200</td>
-          <td class="px-5 py-3 text-gray-400">카카오페이</td>
-          <td class="px-5 py-3 text-gray-400">2026.6.21</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">이민준</td>
-          <td class="px-5 py-3 text-gray-500">연간 구독</td>
-          <td class="px-5 py-3 font-semibold">₩24,800</td>
-          <td class="px-5 py-3 text-gray-400">신용카드</td>
-          <td class="px-5 py-3 text-gray-400">2026.6.20</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">박지연</td>
-          <td class="px-5 py-3 text-gray-500">🥭 500개</td>
-          <td class="px-5 py-3 font-semibold">₩6,800</td>
-          <td class="px-5 py-3 text-gray-400">네이버페이</td>
-          <td class="px-5 py-3 text-gray-400">2026.6.19</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full">환불 요청</span></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">정승연</td>
-          <td class="px-5 py-3 text-gray-500">월간 구독</td>
-          <td class="px-5 py-3 font-semibold">₩3,300</td>
-          <td class="px-5 py-3 text-gray-400">카카오페이</td>
-          <td class="px-5 py-3 text-gray-400">2026.6.18</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">최현우</td>
-          <td class="px-5 py-3 text-gray-500">🥭 1,000개</td>
-          <td class="px-5 py-3 font-semibold">₩11,000</td>
-          <td class="px-5 py-3 text-gray-400">신용카드</td>
-          <td class="px-5 py-3 text-gray-400">2026.6.17</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span></td>
-        </tr>
+      <tbody id="paymentsBody" class="divide-y divide-gray-50">
+        <tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">불러오는 중...</td></tr>
       </tbody>
     </table>
   </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/supabase-config.js"></script>
 <script src="assets/js/admin-auth.js"></script>
 <script src="assets/js/admin-layout.js"></script>
+<script>
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  function formatDate(iso) {
+    if (!iso) return '-';
+    const d = new Date(iso);
+    return `${d.getFullYear()}.${d.getMonth() + 1}.${d.getDate()}`;
+  }
+
+  function statusBadge(status) {
+    if (status === 'refund_requested') return '<span class="text-[11px] font-bold text-orange-500 bg-orange-50 px-2 py-0.5 rounded-full">환불 요청</span>';
+    if (status === 'refunded') return '<span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">환불 완료</span>';
+    return '<span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">완료</span>';
+  }
+
+  async function loadPayments() {
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+
+    const [{ data, error }, { data: monthData }] = await Promise.all([
+      db.from('payments').select('*').order('created_at', { ascending: false }),
+      db.from('payments').select('amount, status').gte('created_at', monthStart),
+    ]);
+
+    const tbody = document.getElementById('paymentsBody');
+
+    if (error) {
+      tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">데이터를 불러오지 못했어요.</td></tr>`;
+      document.getElementById('statTotal').textContent = '-';
+      document.getElementById('statCount').textContent = '-';
+      document.getElementById('statRefund').textContent = '-';
+      return;
+    }
+
+    const completed = (monthData || []).filter(p => p.status === 'completed');
+    const refunds = (monthData || []).filter(p => p.status === 'refund_requested' || p.status === 'refunded');
+    const total = completed.reduce((sum, p) => sum + (p.amount || 0), 0);
+
+    document.getElementById('statTotal').textContent = '₩' + total.toLocaleString();
+    document.getElementById('statCount').textContent = completed.length + '건';
+    document.getElementById('statRefund').textContent = refunds.length + '건';
+
+    if (!data?.length) {
+      tbody.innerHTML = `<tr><td colspan="6" class="px-5 py-8 text-center text-sm text-gray-400">결제 내역이 없어요.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data.map(p => `
+      <tr>
+        <td class="px-5 py-3 font-medium">${p.user_name || '-'}</td>
+        <td class="px-5 py-3 text-gray-500">${p.product || '-'}</td>
+        <td class="px-5 py-3 font-semibold">₩${(p.amount || 0).toLocaleString()}</td>
+        <td class="px-5 py-3 text-gray-400">${p.payment_method || '-'}</td>
+        <td class="px-5 py-3 text-gray-400">${formatDate(p.created_at)}</td>
+        <td class="px-5 py-3">${statusBadge(p.status)}</td>
+      </tr>
+    `).join('');
+  }
+
+  loadPayments();
+</script>
 </body>
 </html>

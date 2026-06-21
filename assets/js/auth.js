@@ -13,6 +13,9 @@ async function getCurrentUser() {
     .eq('id', user.id)
     .single();
 
+  // 접속 시각 기록 (MAU/DAU/이탈자 산출에 사용)
+  sb.from('profiles').update({ last_seen_at: new Date().toISOString() }).eq('id', user.id);
+
   return {
     id: user.id,
     email: user.email,
@@ -35,7 +38,7 @@ async function loginWithEmail(email, password) {
 }
 
 // ---------- 이메일 회원가입 ----------
-async function signupWithEmail(name, email, password) {
+async function signupWithEmail(name, email, password, birthDate, gender) {
   if (!name || !email || !password) {
     alert('이름, 이메일, 비밀번호를 모두 입력해 주세요.');
     return false;
@@ -43,7 +46,7 @@ async function signupWithEmail(name, email, password) {
   const { error } = await sb.auth.signUp({
     email,
     password,
-    options: { data: { name } },
+    options: { data: { name, birth_date: birthDate || null, gender: gender || null } },
   });
   if (error) {
     alert(error.message);

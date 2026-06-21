@@ -18,7 +18,7 @@
     <!-- 왼쪽 메인 컬럼 -->
     <div class="lg:col-span-2 space-y-8">
       <div>
-        <p class="text-2xl font-extrabold leading-snug">안녕하세요, 수정님 👋</p>
+        <p class="text-2xl font-extrabold leading-snug">안녕하세요, <span id="userGreeting">...</span>님 👋</p>
         <p class="text-gray-500 mt-1">오늘도 소중한 하루 되세요</p>
       </div>
 
@@ -31,7 +31,7 @@
         </div>
         <div class="text-right shrink-0 ml-6">
           <p class="text-xs text-black/60 font-semibold">총 저금한 행복</p>
-          <p class="text-4xl font-extrabold">10개</p>
+          <p id="happyCount" class="text-4xl font-extrabold">-</p>
         </div>
       </div>
 
@@ -146,5 +146,20 @@
 <script src="assets/js/supabase-config.js"></script>
 <script src="assets/js/auth.js"></script>
 <script src="assets/js/layout.js"></script>
+<script>
+  (async () => {
+    const user = await getCurrentUser();
+    if (!user) return;
+
+    document.getElementById('userGreeting').textContent = user.name;
+
+    const { count } = await sb
+      .from('happy_savings')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id);
+
+    document.getElementById('happyCount').textContent = (count ?? 0) + '개';
+  })();
+</script>
 </body>
 </html>

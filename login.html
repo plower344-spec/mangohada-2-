@@ -46,6 +46,14 @@
           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FFC107]">
         <input type="email" id="signupEmail" required placeholder="이메일" autocomplete="email"
           class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#FFC107]">
+        <input type="date" id="signupBirthDate" required
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-[#FFC107]">
+        <select id="signupGender" required
+          class="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 focus:outline-none focus:border-[#FFC107]">
+          <option value="" disabled selected>성별 선택</option>
+          <option value="male">남성</option>
+          <option value="female">여성</option>
+        </select>
         <div class="relative">
           <input type="password" id="signupPassword" required placeholder="비밀번호 (8자 이상)" minlength="8" autocomplete="new-password"
             class="w-full border border-gray-200 rounded-xl px-4 py-3 pr-11 text-sm focus:outline-none focus:border-[#FFC107]">
@@ -140,11 +148,13 @@
     const email = document.getElementById('signupEmail').value.trim();
     const password = document.getElementById('signupPassword').value;
     const passwordConfirm = document.getElementById('signupPasswordConfirm').value;
+    const birthDate = document.getElementById('signupBirthDate').value;
+    const gender = document.getElementById('signupGender').value;
     if (password !== passwordConfirm) {
       alert('비밀번호가 일치하지 않습니다.');
       return;
     }
-    const ok = await signupWithEmail(name, email, password);
+    const ok = await signupWithEmail(name, email, password, birthDate, gender);
     if (ok) alert('가입이 완료됐어요! 이메일 인증 후 로그인해 주세요.');
   });
 

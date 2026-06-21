@@ -15,9 +15,8 @@
   <div class="flex items-center justify-between mb-6">
     <div>
       <h2 class="text-lg font-extrabold">전문가 관리</h2>
-      <p class="text-xs text-gray-400 mt-0.5">총 24명</p>
+      <p class="text-xs text-gray-400 mt-0.5">총 <span id="totalCount">-</span>명</p>
     </div>
-    <button class="bg-black text-white text-sm font-bold px-4 py-2 rounded-xl">+ 전문가 등록</button>
   </div>
 
   <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
@@ -33,49 +32,79 @@
           <th class="px-5 py-3"></th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-50">
-        <tr>
-          <td class="px-5 py-3 font-medium">김영희</td>
-          <td class="px-5 py-3"><span class="bg-purple-50 text-purple-600 text-[11px] font-bold px-2 py-0.5 rounded-full">변호사</span></td>
-          <td class="px-5 py-3 text-gray-500 text-xs">19년 경력 유언 전문 변호사</td>
-          <td class="px-5 py-3 font-semibold">⭐ 4.8</td>
-          <td class="px-5 py-3">312회</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">이정현</td>
-          <td class="px-5 py-3"><span class="bg-blue-50 text-blue-600 text-[11px] font-bold px-2 py-0.5 rounded-full">재무설계</span></td>
-          <td class="px-5 py-3 text-gray-500 text-xs">유산 정리 전문 재무상담사</td>
-          <td class="px-5 py-3 font-semibold">⭐ 4.6</td>
-          <td class="px-5 py-3">198회</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">박소연</td>
-          <td class="px-5 py-3"><span class="bg-pink-50 text-pink-600 text-[11px] font-bold px-2 py-0.5 rounded-full">심리상담</span></td>
-          <td class="px-5 py-3 text-gray-500 text-xs">임종 심리 전문 상담사</td>
-          <td class="px-5 py-3 font-semibold">⭐ 4.9</td>
-          <td class="px-5 py-3">421회</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
-        <tr>
-          <td class="px-5 py-3 font-medium">최장현</td>
-          <td class="px-5 py-3"><span class="bg-gray-100 text-gray-600 text-[11px] font-bold px-2 py-0.5 rounded-full">장례지도</span></td>
-          <td class="px-5 py-3 text-gray-500 text-xs">20년 경력 장례지도사</td>
-          <td class="px-5 py-3 font-semibold">⭐ 4.7</td>
-          <td class="px-5 py-3">87회</td>
-          <td class="px-5 py-3"><span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">비활성</span></td>
-          <td class="px-5 py-3 flex gap-2"><button class="text-xs text-gray-400 hover:text-gray-700">수정</button><button class="text-xs text-red-400 hover:text-red-600">삭제</button></td>
-        </tr>
+      <tbody id="expertsBody" class="divide-y divide-gray-50">
+        <tr><td colspan="7" class="px-5 py-8 text-center text-sm text-gray-400">불러오는 중...</td></tr>
       </tbody>
     </table>
   </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="../assets/js/supabase-config.js"></script>
 <script src="assets/js/admin-auth.js"></script>
 <script src="assets/js/admin-layout.js"></script>
+<script>
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const FIELD_COLORS = {
+    '변호사':   'bg-purple-50 text-purple-600',
+    '재무설계': 'bg-blue-50 text-blue-600',
+    '심리상담': 'bg-pink-50 text-pink-600',
+    '장례지도': 'bg-gray-100 text-gray-600',
+    '보험':     'bg-orange-50 text-orange-600',
+  };
+
+  async function loadExperts() {
+    const { data, count, error } = await db
+      .from('experts')
+      .select('*', { count: 'exact' })
+      .order('created_at', { ascending: false });
+
+    const tbody = document.getElementById('expertsBody');
+
+    if (error) {
+      tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sm text-gray-400">데이터를 불러오지 못했어요.</td></tr>`;
+      return;
+    }
+
+    document.getElementById('totalCount').textContent = (count ?? 0).toLocaleString();
+
+    if (!data?.length) {
+      tbody.innerHTML = `<tr><td colspan="7" class="px-5 py-8 text-center text-sm text-gray-400">등록된 전문가가 없어요.</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = data.map(e => `
+      <tr>
+        <td class="px-5 py-3 font-medium">${e.name || '-'}</td>
+        <td class="px-5 py-3">
+          <span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${FIELD_COLORS[e.field] || 'bg-gray-100 text-gray-600'}">
+            ${e.field || '-'}
+          </span>
+        </td>
+        <td class="px-5 py-3 text-gray-500 text-xs">${e.description || '-'}</td>
+        <td class="px-5 py-3 font-semibold">${e.rating != null ? '⭐ ' + e.rating : '-'}</td>
+        <td class="px-5 py-3">${e.consultation_count != null ? e.consultation_count + '회' : '-'}</td>
+        <td class="px-5 py-3">
+          ${e.status === 'inactive'
+            ? '<span class="text-[11px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded-full">비활성</span>'
+            : '<span class="text-[11px] font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">활성</span>'}
+        </td>
+        <td class="px-5 py-3">
+          <button onclick="deleteExpert('${e.id}')" class="text-xs text-red-400 hover:text-red-600">삭제</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  async function deleteExpert(id) {
+    if (!confirm('이 전문가를 삭제할까요?')) return;
+    const { error } = await db.from('experts').delete().eq('id', id);
+    if (error) { alert('삭제 중 오류가 발생했어요.'); return; }
+    loadExperts();
+  }
+
+  loadExperts();
+</script>
 </body>
 </html>
