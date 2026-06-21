@@ -1,23 +1,6 @@
 // ============================================
-// mangohada — 공통 헤더/푸터 삽입 + 활성 메뉴 표시 + 로그인 상태 반영
+// mangohada — 공통 헤더/푸터 삽입 + 활성 메뉴 표시 + 로그인 상태 반영 (Supabase 버전)
 // ============================================
-
-const AUTH_STORAGE_KEY = 'mangohada_user';
-
-// 로그인 상태 확인 (auth.js의 saveSession()이 저장한 값을 읽음)
-function getCurrentUser() {
-  try {
-    return JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY));
-  } catch {
-    return null;
-  }
-}
-
-// 로그아웃
-function logout() {
-  localStorage.removeItem(AUTH_STORAGE_KEY);
-  window.location.href = 'login.html';
-}
 
 const NAV_LINKS_HTML = `
   <a href="index.html" data-page="home" class="nav-link"><span class="dot"></span>홈</a>
@@ -27,9 +10,7 @@ const NAV_LINKS_HTML = `
   <a href="mypage.html" data-page="mypage" class="nav-link"><span class="dot"></span>마이</a>
 `;
 
-function buildHeaderHTML() {
-  const user = getCurrentUser();
-
+function buildHeaderHTML(user) {
   const rightSideHTML = user
     ? `
       <a href="happy-savings.html" class="text-sm font-semibold bg-[#FFC107] px-4 py-2 rounded-full hover:bg-[#ffb300] transition">행복 저금하기</a>
@@ -40,8 +21,8 @@ function buildHeaderHTML() {
       <div class="relative">
         <button id="userMenuTrigger" class="flex items-center gap-2">
           ${
-            user.picture
-              ? `<img src="${user.picture}" class="w-8 h-8 rounded-full object-cover" alt="${user.name}">`
+            user.avatar_url
+              ? `<img src="${user.avatar_url}" class="w-8 h-8 rounded-full object-cover" alt="${user.name}">`
               : `<div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">${(user.name || '?').slice(0, 1)}</div>`
           }
           <span class="hidden lg:block text-sm font-semibold">${user.name || '사용자'}</span>
@@ -75,17 +56,20 @@ function buildHeaderHTML() {
 
 const FOOTER_HTML = `
 <footer class="border-t border-gray-100 mt-12 py-8">
-  <div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-xs text-gray-400">
+  <div class="max-w-7xl mx-auto px-6 text-xs text-gray-400 flex items-center justify-between">
     <span>© 2026 mangohada. 나의 마지막까지, 좋은 삶으로 나아가기 위한 일상 기록</span>
-    <a href="admin/login.html" class="hover:text-gray-600 transition">관리자</a>
+    <a href="admin/login.html" class="text-gray-300 hover:text-gray-500">관리자</a>
   </div>
 </footer>
 `;
 
-function mountLayout() {
+async function mountLayout() {
   const headerSlot = document.getElementById('site-header');
   const footerSlot = document.getElementById('site-footer');
-  if (headerSlot) headerSlot.innerHTML = buildHeaderHTML();
+
+  const user = await getCurrentUser();
+
+  if (headerSlot) headerSlot.innerHTML = buildHeaderHTML(user);
   if (footerSlot) footerSlot.innerHTML = FOOTER_HTML;
 
   // 현재 페이지에 맞는 nav 링크 활성화 (body의 data-page 속성 사용)
@@ -115,3 +99,10 @@ function mountLayout() {
 }
 
 document.addEventListener('DOMContentLoaded', mountLayout);
+
+// 로그인 상태가 바뀔 때마다(로그인/로그아웃/토큰갱신) 헤더 다시 그리기
+if (typeof sb !== 'undefined') {
+  sb.auth.onAuthStateChange(() => {
+    if (document.readyState !== 'loading') mountLayout();
+  });
+}
